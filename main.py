@@ -12,55 +12,62 @@ class tres_en_raya():
         self.X=0
         self.O=0
         self.colocacion=True
+        self.combinacion=False
     
     def colocar_fichas(self,x,y,b,c):
-      if self.colocacion==True:#colocación de las trés fichas de cada jugador
-        if self.O<3 or self.X<3:#condicion para completar las tres fichas de cada jugador
-          if self.jugador1==True:#turno del primer jugador
-            if  c.get()==" ":
-              c.set("X")
-              b=Button(self.raiz, textvariable=c,text=c,foreground = "red",bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
-              self.jugador1=False# termina turno de jugador1
-              self.jugador2=True #dá paso el turno del jugador2
-              self.X=self.X+1
-            elif c.get()=="O":
-              print("esa ficha no es tuya, prueba otro movimiento")
+      if self.combinacion==False:
+        if self.colocacion==True:#colocación de las trés fichas de cada jugador
+          if self.O<3 or self.X<3:#condicion para completar las tres fichas de cada jugador
+            if self.jugador1==True:#turno del primer jugador
+              if  c.get()==" ":
+                c.set("X")
+                b=Button(self.raiz, textvariable=c,text=c,foreground = "red",bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
+                self.jugador1=False# termina turno de jugador1
+                self.jugador2=True #dá paso el turno del jugador2
+                self.X=self.X+1
+                tres.combinaciones_ganadoras("X")
+              elif c.get()=="O":
+                print("esa ficha no es tuya, prueba otro movimiento")
+              else:
+                print("Aquí ya tienes una ficha tuya, coloca primero tus trés fichas")
+            
+            elif self.jugador2==True:
+              if c.get()==" ":
+                c.set("O")
+                b=Button(self.raiz, textvariable=c,text=c,foreground = "blue", bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
+                self.jugador2=False
+                self.jugador1=True
+                self.O=self.O+1
+                print(self.O)
+                tres.combinaciones_ganadoras("O")
+              elif c.get()=="X":
+                print("esa ficha no es tuya, prueba otro movimiento")
+              else:
+                print("Aquí ya tienes una ficha tuya, coloca primero tus trés fichas")
             else:
-              print("Aquí ya tienes una ficha tuya, coloca primero tus trés fichas")
-          
-          elif self.jugador2==True:
-            if c.get()==" ":
-              c.set("O")
-              b=Button(self.raiz, textvariable=c,text=c,foreground = "blue", bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
-              self.jugador2=False
-              self.jugador1=True
-              self.O=self.O+1
-              print(self.O)
-            elif c.get()=="X":
-              print("esa ficha no es tuya, prueba otro movimiento")
-            else:
-              print("Aquí ya tienes una ficha tuya, coloca primero tus trés fichas")
+              print("pulsa start para comenzar")
           else:
-            print("pulsa start para comenzar")
+            self.colocacion=False
+        
+        elif self.colocacion==False:#aqui la condición cuandose ha terminado de colocar las fichas empezaria el juego
+          if c.get()=="X":
+            print("esta es una X")
+          elif c.get()=="O":
+            print("es una O")
+          elif c.get()==" ":
+            print("esta casilla aparece en blanco")  
+          else:
+            print(self.b1['texto'])
+            print("en esta casilla no hay ficha intenta de nuevo:")
+            #tres.cambio_botones""""()
+          #aqui colocamos el final de la funcion de cambio_botones
         else:
-          self.colocacion=False
-      
-      elif self.colocacion==False:#aqui la condición cuandose ha terminado de colocar las fichas empezaria el juego
-        if c.get()=="X":
-          print("esta es una X")
-        elif c.get()=="O":
-          print("es una O")
-        elif c.get()==" ":
-          print("esta casilla aparece en blanco")  
-        else:
-          print(self.b1['texto'])
-          print("en esta casilla no hay ficha intenta de nuevo:")
-          #tres.cambio_botones""""()
-        #aqui colocamos el final de la funcion de cambio_botones
+          print("algo raro pasa")
       else:
-        print("algo raro pasa")
+        print("se acabo")
     
     def start(self):
+      self.combinacion=False
       self.jugador1=True
       Button(self.raiz,text="START",background = "gray",foreground = "red",command=tres.start,state=DISABLED).grid(padx=10,row=5,column=2)
       self.turno.set("Buena Suerte!!")
@@ -73,6 +80,52 @@ class tres_en_raya():
       self.texto7.set(" ")
       self.texto8.set(" ")
       self.texto9.set(" ")
+      self.X=0
+      self.O=0
+
+    def combinaciones_ganadoras(self,x):
+      if self.texto1.get()==x and self.texto2.get()==x and self.texto3.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)   
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+        
+      elif self.texto4.get()==x and self.texto5.get()==x and self.texto6.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      elif self.texto7.get()==x and self.texto8.get()==x and self.texto9.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      elif self.texto1.get()==x and self.texto4.get()==x and self.texto7.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      elif self.texto2.get()==x and self.texto5.get()==x and self.texto8.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      elif self.texto3.get()==x and self.texto6.get()==x and self.texto9.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      elif self.texto1.get()==x and self.texto5.get()==x and self.texto9.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      elif self.texto3.get()==x and self.texto5.get()==x and self.texto7.get()==x:
+        self.combinacion=True
+        self.turno.set("Ganaste Jugador "+x)
+        Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
+      
+      else:
+        pass
 
 
 
