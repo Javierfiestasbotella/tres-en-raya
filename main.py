@@ -50,17 +50,29 @@ class tres_en_raya():
             self.colocacion=False
         
         elif self.colocacion==False:#aqui la condición cuandose ha terminado de colocar las fichas empezaria el juego
-          if c.get()=="X":
-            print("esta es una X")
-          elif c.get()=="O":
-            print("es una O")
+          self.jugador1=True
+          if c.get()=="X" and  self.jugador1==True:
+            c.set(" ")
+          elif  c.get()==" " and  self.jugador1==True:
+            c.set("X")
+            b=Button(self.raiz, textvariable=c,text=c,foreground = "red",bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
+            self.jugador1=False# termina turno de jugador1
+            self.jugador2=True 
+            tres.combinaciones_ganadoras("X")
+          elif c.get()=="O" and self.jugador2==True:
+            c.set(" ")
+          elif c.get()==" " and self.jugador2==True:
+            c.set("O")
+            b=Button(self.raiz, textvariable=c,text=c,foreground = "blue", bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
+            self.jugador2=False
+            self.jugador1=True
+            tres.combinaciones_ganadoras("O")
           elif c.get()==" ":
-            print("esta casilla aparece en blanco")  
-          else:
-            print(self.b1['texto'])
-            print("en esta casilla no hay ficha intenta de nuevo:")
-            #tres.cambio_botones""""()
-          #aqui colocamos el final de la funcion de cambio_botones
+            print("esta casilla aparece en blanco") 
+          elif c.get()=="O" and self.jugador2==False: 
+            print("esta no es tu ficha, la tuya son las X")
+          elif c.get()=="X" and self.jugador1==False: 
+            print("esta no es tu ficha, la tuya son las O")
         else:
           print("algo raro pasa")
       else:
