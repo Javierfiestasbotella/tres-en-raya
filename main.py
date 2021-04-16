@@ -50,24 +50,36 @@ class tres_en_raya():
             self.colocacion=False
         
         elif self.colocacion==False:#aqui la condición cuandose ha terminado de colocar las fichas empezaria el juego
-          self.jugador1=True
           if c.get()=="X" and  self.jugador1==True:
             c.set(" ")
-          elif  c.get()==" " and  self.jugador1==True:
+            self.X=2
+            print(self.X)
+          elif  c.get()==" " and  self.jugador1==True and self.X==2:
             c.set("X")
+            self.X=3
             b=Button(self.raiz, textvariable=c,text=c,foreground = "red",bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
-            self.jugador1=False# termina turno de jugador1
+            self.jugador1=False #termina turno de jugador1
             self.jugador2=True 
             tres.combinaciones_ganadoras("X")
+          elif c.get()=="O" and self.jugador1==True:
+            print("solo puedes mover tus fichas")
+          elif c.get()=="X" and self.jugador1==True:
+            print("tienes que buscar una casilla vacia")
           elif c.get()=="O" and self.jugador2==True:
             c.set(" ")
-          elif c.get()==" " and self.jugador2==True:
+            self.O=2
+          elif c.get()==" " and self.jugador2==True and self.O==2:
             c.set("O")
+            self.O=3
             b=Button(self.raiz, textvariable=c,text=c,foreground = "blue", bd=3,width=10,height=4,command=lambda:tres.colocar_fichas(x,y,b,c)).grid(padx=10, row=x, column=y)
             self.jugador2=False
             self.jugador1=True
             tres.combinaciones_ganadoras("O")
-          elif c.get()==" ":
+          elif c.get()=="X" and self.jugador2==True:
+            print("solo puedes mover tus fichas")
+          elif c.get()=="O" and self.jugador2==True:
+            print("tienes que buscar una casilla vacia")
+          elif c.get()==" " and self.X==3 and self.O==3:
             print("esta casilla aparece en blanco") 
           elif c.get()=="O" and self.jugador2==False: 
             print("esta no es tu ficha, la tuya son las X")
@@ -138,18 +150,9 @@ class tres_en_raya():
       
       else:
         pass
-
-
-
-
-
-    
-      
+   
     def juego(self,x,y):
       self.turno.set("Esto funciona")
-
-
-
 
     def interfaz(self):#pantalla interfaz principal
       self.raiz=Tk()
@@ -186,7 +189,6 @@ class tres_en_raya():
       self.t=Label(self.raiz,textvariable=self.turno,text=self.turno).grid(row=6,column=2)
          
       self.raiz.mainloop()
-
 
 tres=tres_en_raya()
 tres.interfaz()
