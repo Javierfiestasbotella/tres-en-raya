@@ -27,10 +27,9 @@ class tres_en_raya():
                 self.X=self.X+1
                 tres.combinaciones_ganadoras("X")
               elif c.get()=="O":
-                print("esa ficha no es tuya, prueba otro movimiento")
+                messagebox.showinfo(message='esa ficha no es tuya, prueba otro movimiento',title='Atencion!!')
               else:
-                print("Aquí ya tienes una ficha tuya, coloca primero tus trés fichas")
-            
+                messagebox.showinfo(message='Aquí ya tienes una ficha tuya, coloca primero tus trés fichas',title='Atencion!!')            
             elif self.jugador2==True:
               if c.get()==" ":
                 c.set("O")
@@ -41,11 +40,11 @@ class tres_en_raya():
                 print(self.O)
                 tres.combinaciones_ganadoras("O")
               elif c.get()=="X":
-                print("esa ficha no es tuya, prueba otro movimiento")
+                messagebox.showinfo(message='esa ficha no es tuya, prueba otro movimiento',title='Atencion!!')
               else:
-                print("Aquí ya tienes una ficha tuya, coloca primero tus trés fichas")
+                messagebox.showinfo(message='Aquí ya tienes una ficha tuya, coloca primero tus trés fichas',title='Atencion!!')
             else:
-              print("pulsa start para comenzar")
+              messagebox.showinfo(message='pulsa start para comenzar',title='Atencion!!')
           else:
             self.colocacion=False
         
@@ -62,9 +61,9 @@ class tres_en_raya():
             self.jugador2=True 
             tres.combinaciones_ganadoras("X")
           elif c.get()=="O" and self.jugador1==True:
-            print("solo puedes mover tus fichas")
+            messagebox.showinfo(message='solo puedes mover tus fichas',title='Atencion!!')
           elif c.get()=="X" and self.jugador1==True:
-            print("tienes que buscar una casilla vacia")
+            messagebox.showinfo(message='tienes que buscar una casilla vacia',title='Atencion!!')
           elif c.get()=="O" and self.jugador2==True:
             c.set(" ")
             self.O=2
@@ -76,19 +75,19 @@ class tres_en_raya():
             self.jugador1=True
             tres.combinaciones_ganadoras("O")
           elif c.get()=="X" and self.jugador2==True:
-            print("solo puedes mover tus fichas")
+            messagebox.showinfo(message='solo puedes mover tus fichas',title='Atencion!!')
           elif c.get()=="O" and self.jugador2==True:
-            print("tienes que buscar una casilla vacia")
+            messagebox.showinfo(message='tienes que buscar una casilla vacia',title='Atencion!!')
           elif c.get()==" " and self.X==3 and self.O==3:
-            print("esta casilla aparece en blanco") 
-          elif c.get()=="O" and self.jugador2==False: 
-            print("esta no es tu ficha, la tuya son las X")
-          elif c.get()=="X" and self.jugador1==False: 
-            print("esta no es tu ficha, la tuya son las O")
-        else:
-          print("algo raro pasa")
+            messagebox.showinfo(message='esta casilla aparece en blanco',title='Atencion!!')
+          elif c.get()=="O" and self.jugador2==False:
+            messagebox.showinfo(message='esta no es tu ficha, la tuya son las X',title='Atencion!!')
+          elif c.get()=="X" and self.jugador1==False:
+            messagebox.showinfo(message='esta no es tu ficha, la tuya son las O',title='Atencion!!')
+          else:
+            messagebox.showinfo(message='algo raro pasa',title='Atencion!!')
       else:
-        print("se acabo")
+        messagebox.showinfo(message='se acabo',title='Atencion!!')
         Button(self.raiz,text="START",background = "green",foreground = "white",command=tres.start).grid(padx=10,row=5,column=2)
 
     
